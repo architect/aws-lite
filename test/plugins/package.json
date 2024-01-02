@@ -1,0 +1,5 @@
+{
+  "devDependencies": {
+    "s3rver": "^3.7.1"
+  }
+}

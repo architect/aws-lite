@@ -164,7 +164,7 @@ function request (params, creds, region, config, metadata) {
 
     /* istanbul ignore next */
     if (debug) {
-      let { method = 'GET', service, host, path, port = '', headers, protocol, body } = options
+      let { method = 'GET', service, host, path, port, headers, protocol, body } = options
       let truncatedBody
       /**/ if (isBuffer) truncatedBody = `<body buffer of ${body.length}b>`
       else if (isStream) truncatedBody = `<readable stream>`
@@ -172,7 +172,7 @@ function request (params, creds, region, config, metadata) {
       console.error('[aws-lite] Request:', {
         service,
         method,
-        url: `${protocol}//${host}${port}${path}`,
+        url: `${protocol}//${host}${port ? ':' + port : ''}${path}`,
         headers: { ...headers, Authorization: headers.Authorization.substring(0, 35) + '...' },
         body: truncatedBody || '<no body>',
       }, '\n')

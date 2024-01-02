@@ -26,7 +26,9 @@ const Key = { ...str, required, comment: 'S3 key / file name' }
 const PartNumber = { ...num, comment: 'Part number (between 1 - 10,000) of the object' }
 const VersionId = { ...str, comment: 'Reference a specific version of the object' }
 
-const host = Bucket => `${Bucket}.s3.amazonaws.com`
+const notTesting = process.env.NODE_ENV !== 'testing'
+const host = Bucket => notTesting ? `${Bucket}.s3.amazonaws.com` : 'localhost'
+const endpoint = (Bucket, path) => notTesting ? path : `/${Bucket}${path ? '/' + path : ''}`
 const defaultResponse = ({ payload }) => payload
 const defaultError = ({ statusCode, error }) => {
   // SDK v2 lowcases `code`
@@ -49,6 +51,7 @@ const CreateBucket = {
     return {
       host: host(Bucket),
       method: 'PUT',
+      endpoint: endpoint(Bucket),
       headers: { ...xml, ...getHeadersFromParams(params) },
     }
   },
@@ -68,6 +71,7 @@ const DeleteBucket = {
     return {
       host: host(Bucket),
       method: 'DELETE',
+      endpoint: endpoint(Bucket),
       headers: { ...getHeadersFromParams(params) },
     }
   },
@@ -87,7 +91,7 @@ const DeleteObject = {
     return {
       host: host(Bucket),
       method: 'DELETE',
-      endpoint: `/${Key}`,
+      endpoint: endpoint(Bucket, `/${Key}`),
       headers: { ...xml, ...getHeadersFromParams(params) },
     }
   },
@@ -105,7 +109,7 @@ const DeleteObjects = {
     const { Bucket, Delete } = params
     return {
       host: host(Bucket),
-      endpoint: '/?delete',
+      endpoint: endpoint(Bucket, '/?delete'),
       headers: { ...xml, ...getHeadersFromParams(params) },
       payload: { Delete },
     }
@@ -140,7 +144,7 @@ const GetObject = {
     let query = getQueryFromParams(params, queryParams)
     return {
       host: host(Bucket),
-      endpoint: `/${Key}`,
+      endpoint: endpoint(Bucket, `/${Key}`),
       headers,
       query,
     }
@@ -164,6 +168,7 @@ const HeadBucket = {
     let { Bucket } = params
     return {
       host: host(Bucket),
+      endpoint: endpoint(Bucket),
       method: 'HEAD',
       headers: getHeadersFromParams(params),
     }
@@ -191,7 +196,7 @@ const HeadObject = {
     let query = getQueryFromParams(params, queryParams)
     return {
       host: host(Bucket),
-      endpoint: `/${Key}`,
+      endpoint: endpoint(Bucket, `/${Key}`),
       method: 'HEAD',
       headers,
       query,
@@ -204,11 +209,7 @@ const HeadObject = {
 const ListBuckets = {
   awsDoc: docRoot + 'API_ListBuckets.html',
   validate: {},
-  request: () => {
-    return {
-      endpoint: '/',
-    }
-  },
+  request: () => ({}),
   response: ({ payload }) => payload,
   error: defaultError,
 }
@@ -236,6 +237,7 @@ const ListObjectsV2 = {
     query['list-type'] = 2
     return {
       host: host(Bucket),
+      endpoint: endpoint(Bucket),
       headers,
       query,
       paginate,
