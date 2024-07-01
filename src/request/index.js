@@ -6,19 +6,24 @@ let request = require('./request')
 module.exports = async function _request (params, creds, region, config, metadata) {
   /* istanbul ignore next: TODO remove + test */
   if ((params.paginator?.default === 'enabled' && params.paginate !== false) ||
-      (params.paginator && params.paginate)) {
-    return await paginator(params, creds, region, config, metadata)
+    (params.paginator && params.paginate)) {
+    if (params.paginate === 'async') {
+      return await asyncPaginator(params, creds, region, config, metadata)
+    }
+    else {
+      return await paginator(params, creds, region, config, metadata)
+    }
   }
   return await makeRequest(params, creds, region, config, metadata)
 }
 
 async function makeRequest (params, creds, region, config, metadata) {
-  let overrides =   getEndpointParams(params)
-  let protocol =    overrides.protocol    || config.protocol
-  let host =        overrides.host        || config.host
-  let port =        overrides.port        || config.port
-  let pathPrefix =  overrides.pathPrefix  || config.pathPrefix
-  let path =        params.path           || ''
+  let overrides = getEndpointParams(params)
+  let protocol = overrides.protocol || config.protocol
+  let host = overrides.host || config.host
+  let port = overrides.port || config.port
+  let pathPrefix = overrides.pathPrefix || config.pathPrefix
+  let path = params.path || ''
 
   // Final validation, remove aliases, etc.
   validateProtocol(protocol)
@@ -72,7 +77,7 @@ async function makeRequest (params, creds, region, config, metadata) {
       // A variety of services use AWS JSON; we'll make it easier via a header or passed param
       // Allow for manual encoding by passing a header while setting awsjson to false
       let awsjsonEncode = params.awsjson ||
-                          (AwsJSONContentType(contentType) && params.awsjson !== false)
+        (AwsJSONContentType(contentType) && params.awsjson !== false)
       if (awsjsonEncode) {
         // Backfill content-type header yet again
         if (!AwsJSONContentType(contentType)) {
@@ -243,4 +248,73 @@ function reNestAccumulated (acc, items) {
   acc = Array.isArray(acc) ? acc : acc.split('.')
   if (!acc.length) return items
   return { [acc.shift()]: reNestAccumulated(acc, items) }
+}
+
+/* istanbul ignore next: TODO remove + test */
+async function asyncPaginator (params, creds, region, config, metadata) {
+  let { type = 'payload', cursor, token } = params.paginator
+  // Normalize tokens and cursors into arrays
+  if (!Array.isArray(cursor)) cursor = [ cursor ]
+  if (!Array.isArray(token)) token = [ token ]
+  if (cursor.length !== token.length) throw ReferenceError(`aws-lite paginator requires an equal number of cursor and token properties`)
+  // Split nested tokens
+  token = token.map(c => c.split('.'))
+  let originalHeaders = copy(params.headers || {})
+
+  const asyncIterator = (async function* () {
+    // Request first page
+    let currPage = await makeRequest(
+      { ...params, headers: copy(originalHeaders) },
+      creds, region, config, metadata,
+    )
+    if (!currPage.payload) throw ReferenceError('Pagination error: missing API response')
+    if (typeof currPage.payload !== 'object') throw ReferenceError('Pagination error: response must be valid JSON or XML')
+    let cursorValues = findAllTokens(currPage.payload, token, cursor)
+    yield currPage
+    // Continue requesting pages until no more tokens are found
+    while (currPage && cursorValues) {
+      if (type === 'payload' || !type) {
+        params.payload = { ...params.payload, ...cursorValues }
+      }
+      if (type === 'headers') {
+        params.headers = { ...params.headers, ...cursorValues }
+      }
+      if (type === 'query') {
+        params.query = { ...params.query, ...cursorValues }
+      }
+      currPage = await makeRequest(
+        { ...params, headers: copy(originalHeaders) },
+        creds, region, config, metadata,
+      )
+      if (!currPage.payload) throw ReferenceError('Pagination error: missing API response')
+      if (typeof currPage.payload !== 'object') throw ReferenceError('Pagination error: response must be valid JSON or XML')
+      cursorValues = findAllTokens(currPage.payload, token, cursor)
+      yield currPage
+    }
+  })()
+  // Wrap asyncIterator in an object for easy detection within the client-factory
+  return { asyncIterator }
+}
+
+// Construct an object in the form of {cursorKey: cursorValue}
+/* istanbul ignore next: TODO remove + test */
+function findAllTokens (data, tokens, cursors) {
+  let result
+  tokens.forEach((t, i) => {
+    const value = findToken(data, t, 0)
+    if (value) {
+      result = result || {}
+      result[cursors[i]]  = value
+    }
+  })
+  return result
+}
+
+// Recursive search for tokens
+// Nested tokens such as `a.b.c` are passed as ['a', 'b', 'c']
+/* istanbul ignore next: TODO remove + test */
+function findToken (data, token, i) {
+  if (i == token.length - 1 && data[token[i]]) return data[token[i]] // Value found
+  if (!data[token[i]]) return // No value found
+  return findToken(data[token[i]], token, i + 1) // Recurse
 }

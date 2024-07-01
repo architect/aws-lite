@@ -142,6 +142,21 @@ module.exports = async function clientFactory (config, creds, region) {
 
               // Run plugin.method.response()
               if (method.response) {
+
+                // Async pagination enabled, found async iterator
+                /* istanbul ignore next: TODO remove + test */
+                if (response.asyncIterator) {
+                  return iterativeRequestGenerator({
+                    asyncIterator: response.asyncIterator,
+                    response: method.response,
+                    method,
+                    metadata,
+                    config,
+                    pluginUtils,
+                    region: selectedRegion,
+                  })
+                }
+
                 try {
                   var pluginRes = await method.response(response, { ...pluginUtils, region: selectedRegion })
                 }
@@ -262,4 +277,41 @@ async function getMock (property, name, params, metadata) {
     }
     return response
   }
+}
+
+/* istanbul ignore next: TODO remove + test */
+async function* iterativeRequestGenerator (params) {
+  const { asyncIterator, response, region, pluginUtils, metadata, config } = params
+  let pluginResponse
+  for await (let page of asyncIterator) {
+    try {
+      pluginResponse = response(page,  { ...pluginUtils, region })
+    }
+    catch (methodError) {
+      errorHandler({ error: methodError, metadata })
+      break
+    }
+    if (pluginResponse) {
+      yield pluginResponse
+    }
+    else {
+      yield maybeUnmarshall(pluginResponse, config)
+    }
+  }
+}
+
+/* istanbul ignore next: TODO remove + test */
+function maybeUnmarshall (pluginResponse, config) {
+  let unmarshalling = pluginResponse?.awsjson
+  let response
+  if (unmarshalling) {
+    delete pluginResponse.awsjson
+    // If a payload property isn't included, it _is_ the payload
+    let unmarshalled = awsjson.unmarshall(pluginResponse.payload || pluginResponse, { awsjson: unmarshalling, config })
+    response = pluginResponse.payload
+      ? { ...pluginResponse, payload: unmarshalled }
+      : unmarshalled
+  }
+  else response = pluginResponse
+  return response
 }

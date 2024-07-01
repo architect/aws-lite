@@ -32,7 +32,7 @@ const Key = { ...str, required, comment: 'S3 key / file name' }
 const PartNumber = { ...num, comment: 'Part number (between 1 - 10,000) of the object' }
 const Prefix = { ...str, comment: 'Limit response to keys that begin with the specified prefix' }
 const UploadId = { ...str, required, comment: 'ID of the multipart upload' }
-const valPaginate = { ...bool, comment: 'Enable automatic result pagination; use this instead of making your own individual pagination requests' }
+const valPaginate = { type: [ 'boolean', 'string' ], comment: 'Enable automatic result pagination; use this instead of making your own individual pagination requests' }
 const VersionId = { ...str, comment: 'Reference a specific version of the object' }
 
 const defaultResponse = ({ payload }) => payload || {}
@@ -1677,7 +1677,7 @@ const ListMultipartUploads = {
     const headers = getHeadersFromParams(params, queryParams + [ 'paginate' ])
     let query = { uploads: '', ...getQueryFromParams(params, queryParams) }
     let paginate
-    if (params.paginate) paginate = true
+    if (params.paginate) paginate = params.paginate
     return {
       host,
       pathPrefix,
@@ -1761,6 +1761,7 @@ const ListObjectVersions = {
     MaxKeys: { ...num, comment: 'Maximum number of keys (at most 1000) to be returned in the response' },
     Prefix,
     VersionIdMarker: { ...str, comment: 'Specify the version to begin listing from', ref: docRoot + 'API_ListObjectVersions.html#API_ListObjectVersions_RequestParameters' },
+    paginate: valPaginate,
     ...getValidateHeaders('ExpectedBucketOwner', 'RequestPayer', 'OptionalObjectAttributes'),
   },
   request: (params, utils) => {
@@ -1768,28 +1769,37 @@ const ListObjectVersions = {
     const headers = getHeadersFromParams(params, queryParams)
     const query = { versions: '', ...getQueryFromParams(params, queryParams) }
     const { host, pathPrefix } = getHost(params, utils)
+    const { paginate } = params
     return {
       host,
       pathPrefix,
       headers,
       query,
+      paginate,
+      paginator: {
+        type: 'query',
+        cursor: [ 'key-marker', 'version-id-marker' ],
+        token: [ 'NextKeyMarker', 'NextVersionIdMarker' ],
+      },
     }
   },
   response: ({ headers, payload }) => {
-    let res = payload
-    res.Versions = Array.isArray(res.Version) ? res.Version : [ res.Version ]
-    delete res.Version
-    res.Versions = res.Versions.map(i => {
-      if (i.ChecksumAlgorithm && Array.isArray(i.ChecksumAlgorithm)) i.ChecksumAlgorithm = [ i.ChecksumAlgorithm ]
-      return i
-    })
-    if (res.DeleteMarker) {
-      res.DeleteMarkers = Array.isArray(res.DeleteMarker) ? res.DeleteMarker : [ res.DeleteMarker ]
-      delete res.DeleteMarker
+    let { Version, DeleteMarker, CommonPrefixes } = payload
+    if (Version) {
+      Version = Array.isArray(Version) ? Version : [ Version ]
+      payload.Versions = Version.map(i => {
+        if (i.ChecksumAlgorithm && Array.isArray(i.ChecksumAlgorithm)) i.ChecksumAlgorithm = [ i.ChecksumAlgorithm ]
+        return i
+      })
+      delete payload.Version
     }
-    if (res.CommonPrefixes && !Array.isArray(res.CommonPrefixes)) res.CommonPrefixes = [ res.CommonPrefixes ]
+    if (DeleteMarker) {
+      payload.DeleteMarkers = Array.isArray(DeleteMarker) ? DeleteMarker : [ DeleteMarker ]
+      delete payload.DeleteMarker
+    }
+    if (CommonPrefixes && !Array.isArray(CommonPrefixes)) payload.CommonPrefixes = [ payload.CommonPrefixes ]
     return {
-      ...res,
+      ...payload,
       ...parseHeadersToResults({ headers }),
     }
   },

@@ -417,25 +417,25 @@ declare interface AwsLiteS3 {
    * - AWS docs: {@link https://docs.aws.amazon.com/AmazonS3/latest/API/API_ListBucketAnalyticsConfigurations.html S3: ListBucketAnalyticsConfigurations}
    * - aws-lite docs: {@link https://github.com/architect/aws-lite/blob/main/plugins/s3/readme.md#ListBucketAnalyticsConfigurations S3: ListBucketAnalyticsConfigurations}
    */
-  ListBucketAnalyticsConfigurations: (input: { Bucket: string, ContinuationToken?: string, paginate?: boolean, ExpectedBucketOwner?: string }) => Promise<ListBucketAnalyticsConfigurationsResponse>
+  ListBucketAnalyticsConfigurations: (input: { Bucket: string, ContinuationToken?: string, paginate?: boolean | string, ExpectedBucketOwner?: string }) => Promise<ListBucketAnalyticsConfigurationsResponse>
   /**
    * @description
    * - AWS docs: {@link https://docs.aws.amazon.com/AmazonS3/latest/API/API_ListBucketIntelligentTieringConfigurations.html S3: ListBucketIntelligentTieringConfigurations}
    * - aws-lite docs: {@link https://github.com/architect/aws-lite/blob/main/plugins/s3/readme.md#ListBucketIntelligentTieringConfigurations S3: ListBucketIntelligentTieringConfigurations}
    */
-  ListBucketIntelligentTieringConfigurations: (input: { Bucket: string, ContinuationToken?: string, paginate?: boolean, ExpectedBucketOwner?: string }) => Promise<ListBucketIntelligentTieringConfigurationsResponse>
+  ListBucketIntelligentTieringConfigurations: (input: { Bucket: string, ContinuationToken?: string, paginate?: boolean | string, ExpectedBucketOwner?: string }) => Promise<ListBucketIntelligentTieringConfigurationsResponse>
   /**
    * @description
    * - AWS docs: {@link https://docs.aws.amazon.com/AmazonS3/latest/API/API_ListBucketInventoryConfigurations.html S3: ListBucketInventoryConfigurations}
    * - aws-lite docs: {@link https://github.com/architect/aws-lite/blob/main/plugins/s3/readme.md#ListBucketInventoryConfigurations S3: ListBucketInventoryConfigurations}
    */
-  ListBucketInventoryConfigurations: (input: { Bucket: string, ContinuationToken?: string, paginate?: boolean, ExpectedBucketOwner?: string }) => Promise<ListBucketInventoryConfigurationsResponse>
+  ListBucketInventoryConfigurations: (input: { Bucket: string, ContinuationToken?: string, paginate?: boolean | string, ExpectedBucketOwner?: string }) => Promise<ListBucketInventoryConfigurationsResponse>
   /**
    * @description
    * - AWS docs: {@link https://docs.aws.amazon.com/AmazonS3/latest/API/API_ListBucketMetricsConfigurations.html S3: ListBucketMetricsConfigurations}
    * - aws-lite docs: {@link https://github.com/architect/aws-lite/blob/main/plugins/s3/readme.md#ListBucketMetricsConfigurations S3: ListBucketMetricsConfigurations}
    */
-  ListBucketMetricsConfigurations: (input: { Bucket: string, ContinuationToken?: string, paginate?: boolean, ExpectedBucketOwner?: string }) => Promise<ListBucketMetricsConfigurationsResponse>
+  ListBucketMetricsConfigurations: (input: { Bucket: string, ContinuationToken?: string, paginate?: boolean | string, ExpectedBucketOwner?: string }) => Promise<ListBucketMetricsConfigurationsResponse>
   /** @description aws-lite docs: {@link https://github.com/architect/aws-lite/blob/main/plugins/s3/readme.md#ListBuckets S3: ListBuckets} */
   ListBuckets: () => Promise<ListBucketsResponse>
   /**
@@ -443,19 +443,19 @@ declare interface AwsLiteS3 {
    * - AWS docs: {@link https://docs.aws.amazon.com/AmazonS3/latest/API/API_ListMultipartUploads.html S3: ListMultipartUploads}
    * - aws-lite docs: {@link https://github.com/architect/aws-lite/blob/main/plugins/s3/readme.md#ListMultipartUploads S3: ListMultipartUploads}
    */
-  ListMultipartUploads: (input: { Bucket: string, Delimiter?: string, EncodingType?: string, KeyMarker?: string, MaxUploads?: number, UploadIdMarker?: string, ExpectedBucketOwner?: string, RequestPayer?: string, paginate?: boolean }) => Promise<ListMultipartUploadsResponse>
+  ListMultipartUploads: (input: { Bucket: string, Delimiter?: string, EncodingType?: string, KeyMarker?: string, MaxUploads?: number, UploadIdMarker?: string, ExpectedBucketOwner?: string, RequestPayer?: string, paginate?: boolean | string }) => Promise<ListMultipartUploadsResponse>
   /**
    * @description
    * - AWS docs: {@link https://docs.aws.amazon.com/AmazonS3/latest/API/API_ListObjectsV2.html S3: ListObjectsV2}
    * - aws-lite docs: {@link https://github.com/architect/aws-lite/blob/main/plugins/s3/readme.md#ListObjectsV2 S3: ListObjectsV2}
    */
-  ListObjectsV2: (input: { Bucket: string, ContinuationToken?: string, Delimiter?: string, EncodingType?: string, FetchOwner?: string, MaxKeys?: number, Prefix?: string, StartAfter?: string, RequestPayer?: string, ExpectedBucketOwner?: string, OptionalObjectAttributes?: string, paginate?: boolean }) => Promise<ListObjectsV2Response>
+  ListObjectsV2: (input: { Bucket: string, ContinuationToken?: string, Delimiter?: string, EncodingType?: string, FetchOwner?: string, MaxKeys?: number, Prefix?: string, StartAfter?: string, RequestPayer?: string, ExpectedBucketOwner?: string, OptionalObjectAttributes?: string, paginate?: boolean | string }) => Promise<ListObjectsV2Response>
   /**
    * @description
    * - AWS docs: {@link https://docs.aws.amazon.com/AmazonS3/latest/API/API_ListObjectVersions.html S3: ListObjectVersions}
    * - aws-lite docs: {@link https://github.com/architect/aws-lite/blob/main/plugins/s3/readme.md#ListObjectVersions S3: ListObjectVersions}
    */
-  ListObjectVersions: (input: { Bucket: string, Delimiter?: string, EncodingType?: string, KeyMarker?: string, MaxKeys?: number, Prefix?: string, VersionIdMarker?: string, ExpectedBucketOwner?: string, RequestPayer?: string, OptionalObjectAttributes?: string }) => Promise<ListObjectVersionsResponse>
+  ListObjectVersions: (input: { Bucket: string, Delimiter?: string, EncodingType?: string, KeyMarker?: string, MaxKeys?: number, Prefix?: string, VersionIdMarker?: string, paginate?: boolean | string, ExpectedBucketOwner?: string, RequestPayer?: string, OptionalObjectAttributes?: string }) => Promise<ListObjectVersionsResponse>
   /**
    * @description
    * - AWS docs: {@link https://docs.aws.amazon.com/AmazonS3/latest/API/API_ListParts.html S3: ListParts}

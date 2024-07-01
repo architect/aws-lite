@@ -281,7 +281,7 @@ declare interface AwsLiteIAM {
    * - AWS docs: {@link https://docs.aws.amazon.com/IAM/latest/APIReference/API_GetGroup.html IAM: GetGroup}
    * - aws-lite docs: {@link https://github.com/architect/aws-lite/blob/main/plugins/iam/readme.md#GetGroup IAM: GetGroup}
    */
-  GetGroup: (input: { GroupName: string, Marker?: string, MaxItems?: number, paginate?: boolean }) => Promise<GetGroupResponse>
+  GetGroup: (input: { GroupName: string, Marker?: string, MaxItems?: number, paginate?: boolean | string }) => Promise<GetGroupResponse>
   /**
    * @description
    * - AWS docs: {@link https://docs.aws.amazon.com/IAM/latest/APIReference/API_GetInstanceProfile.html IAM: GetInstanceProfile}
@@ -317,115 +317,115 @@ declare interface AwsLiteIAM {
    * - AWS docs: {@link https://docs.aws.amazon.com/IAM/latest/APIReference/API_ListAccessKeys.html IAM: ListAccessKeys}
    * - aws-lite docs: {@link https://github.com/architect/aws-lite/blob/main/plugins/iam/readme.md#ListAccessKeys IAM: ListAccessKeys}
    */
-  ListAccessKeys: (input: { Marker?: string, MaxItems?: number, UserName?: string, paginate?: boolean }) => Promise<ListAccessKeysResponse>
+  ListAccessKeys: (input: { Marker?: string, MaxItems?: number, UserName?: string, paginate?: boolean | string }) => Promise<ListAccessKeysResponse>
   /**
    * @description
    * - AWS docs: {@link https://docs.aws.amazon.com/IAM/latest/APIReference/API_ListAccountAliases.html IAM: ListAccountAliases}
    * - aws-lite docs: {@link https://github.com/architect/aws-lite/blob/main/plugins/iam/readme.md#ListAccountAliases IAM: ListAccountAliases}
    */
-  ListAccountAliases: (input: { Marker?: string, MaxItems?: number, paginate?: boolean }) => Promise<ListAccountAliasesResponse>
+  ListAccountAliases: (input: { Marker?: string, MaxItems?: number, paginate?: boolean | string }) => Promise<ListAccountAliasesResponse>
   /**
    * @description
    * - AWS docs: {@link https://docs.aws.amazon.com/IAM/latest/APIReference/API_ListAttachedGroupPolicies.html IAM: ListAttachedGroupPolicies}
    * - aws-lite docs: {@link https://github.com/architect/aws-lite/blob/main/plugins/iam/readme.md#ListAttachedGroupPolicies IAM: ListAttachedGroupPolicies}
    */
-  ListAttachedGroupPolicies: (input: { GroupName: string, Marker?: string, PathPrefix?: string, MaxItems?: number, paginate?: boolean }) => Promise<ListAttachedGroupPoliciesResponse>
+  ListAttachedGroupPolicies: (input: { GroupName: string, Marker?: string, PathPrefix?: string, MaxItems?: number, paginate?: boolean | string }) => Promise<ListAttachedGroupPoliciesResponse>
   /**
    * @description
    * - AWS docs: {@link https://docs.aws.amazon.com/IAM/latest/APIReference/API_ListAttachedRolePolicies.html IAM: ListAttachedRolePolicies}
    * - aws-lite docs: {@link https://github.com/architect/aws-lite/blob/main/plugins/iam/readme.md#ListAttachedRolePolicies IAM: ListAttachedRolePolicies}
    */
-  ListAttachedRolePolicies: (input: { RoleName: string, Marker?: string, PathPrefix?: string, MaxItems?: number, paginate?: boolean }) => Promise<ListAttachedRolePoliciesResponse>
+  ListAttachedRolePolicies: (input: { RoleName: string, Marker?: string, PathPrefix?: string, MaxItems?: number, paginate?: boolean | string }) => Promise<ListAttachedRolePoliciesResponse>
   /**
    * @description
    * - AWS docs: {@link https://docs.aws.amazon.com/IAM/latest/APIReference/API_ListAttachedUserPolicies.html IAM: ListAttachedUserPolicies}
    * - aws-lite docs: {@link https://github.com/architect/aws-lite/blob/main/plugins/iam/readme.md#ListAttachedUserPolicies IAM: ListAttachedUserPolicies}
    */
-  ListAttachedUserPolicies: (input: { UserName: string, Marker?: string, PathPrefix?: string, MaxItems?: number, paginate?: boolean }) => Promise<ListAttachedUserPoliciesResponse>
+  ListAttachedUserPolicies: (input: { UserName: string, Marker?: string, PathPrefix?: string, MaxItems?: number, paginate?: boolean | string }) => Promise<ListAttachedUserPoliciesResponse>
   /**
    * @description
    * - AWS docs: {@link https://docs.aws.amazon.com/IAM/latest/APIReference/API_ListGroupPolicies.html IAM: ListGroupPolicies}
    * - aws-lite docs: {@link https://github.com/architect/aws-lite/blob/main/plugins/iam/readme.md#ListGroupPolicies IAM: ListGroupPolicies}
    */
-  ListGroupPolicies: (input: { GroupName: string, Marker?: string, MaxItems?: number, paginate?: boolean }) => Promise<ListGroupPoliciesResponse>
+  ListGroupPolicies: (input: { GroupName: string, Marker?: string, MaxItems?: number, paginate?: boolean | string }) => Promise<ListGroupPoliciesResponse>
   /**
    * @description
    * - AWS docs: {@link https://docs.aws.amazon.com/IAM/latest/APIReference/API_ListGroups.html IAM: ListGroups}
    * - aws-lite docs: {@link https://github.com/architect/aws-lite/blob/main/plugins/iam/readme.md#ListGroups IAM: ListGroups}
    */
-  ListGroups: (input: { Marker?: string, MaxItems?: number, PathPrefix?: string, paginate?: boolean }) => Promise<ListGroupsResponse>
+  ListGroups: (input: { Marker?: string, MaxItems?: number, PathPrefix?: string, paginate?: boolean | string }) => Promise<ListGroupsResponse>
   /**
    * @description
    * - AWS docs: {@link https://docs.aws.amazon.com/IAM/latest/APIReference/API_ListGroupsForUser.html IAM: ListGroupsForUser}
    * - aws-lite docs: {@link https://github.com/architect/aws-lite/blob/main/plugins/iam/readme.md#ListGroupsForUser IAM: ListGroupsForUser}
    */
-  ListGroupsForUser: (input: { UserName: string, Marker?: string, MaxItems?: number, paginate?: boolean }) => Promise<ListGroupsForUserResponse>
+  ListGroupsForUser: (input: { UserName: string, Marker?: string, MaxItems?: number, paginate?: boolean | string }) => Promise<ListGroupsForUserResponse>
   /**
    * @description
    * - AWS docs: {@link https://docs.aws.amazon.com/IAM/latest/APIReference/API_ListInstanceProfiles.html IAM: ListInstanceProfiles}
    * - aws-lite docs: {@link https://github.com/architect/aws-lite/blob/main/plugins/iam/readme.md#ListInstanceProfiles IAM: ListInstanceProfiles}
    */
-  ListInstanceProfiles: (input: { Marker?: string, MaxItems?: number, PathPrefix?: string, paginate?: boolean }) => Promise<ListInstanceProfilesResponse>
+  ListInstanceProfiles: (input: { Marker?: string, MaxItems?: number, PathPrefix?: string, paginate?: boolean | string }) => Promise<ListInstanceProfilesResponse>
   /**
    * @description
    * - AWS docs: {@link https://docs.aws.amazon.com/IAM/latest/APIReference/API_ListInstanceProfilesForRole.html IAM: ListInstanceProfilesForRole}
    * - aws-lite docs: {@link https://github.com/architect/aws-lite/blob/main/plugins/iam/readme.md#ListInstanceProfilesForRole IAM: ListInstanceProfilesForRole}
    */
-  ListInstanceProfilesForRole: (input: { RoleName: string, Marker?: string, MaxItems?: number, paginate?: boolean }) => Promise<ListInstanceProfilesForRoleResponse>
+  ListInstanceProfilesForRole: (input: { RoleName: string, Marker?: string, MaxItems?: number, paginate?: boolean | string }) => Promise<ListInstanceProfilesForRoleResponse>
   /**
    * @description
    * - AWS docs: {@link https://docs.aws.amazon.com/IAM/latest/APIReference/API_ListInstanceProfileTags.html IAM: ListInstanceProfileTags}
    * - aws-lite docs: {@link https://github.com/architect/aws-lite/blob/main/plugins/iam/readme.md#ListInstanceProfileTags IAM: ListInstanceProfileTags}
    */
-  ListInstanceProfileTags: (input: { InstanceProfileName: string, Marker?: string, MaxItems?: number, paginate?: boolean }) => Promise<ListInstanceProfileTagsResponse>
+  ListInstanceProfileTags: (input: { InstanceProfileName: string, Marker?: string, MaxItems?: number, paginate?: boolean | string }) => Promise<ListInstanceProfileTagsResponse>
   /**
    * @description
    * - AWS docs: {@link https://docs.aws.amazon.com/IAM/latest/APIReference/API_ListPolicies.html IAM: ListPolicies}
    * - aws-lite docs: {@link https://github.com/architect/aws-lite/blob/main/plugins/iam/readme.md#ListPolicies IAM: ListPolicies}
    */
-  ListPolicies: (input: { Marker?: string, MaxItems?: number, OnlyAttached?: boolean, PathPrefix?: string, PolicyUsageFilter?: string, Scope?: string, paginate?: boolean }) => Promise<ListPoliciesResponse>
+  ListPolicies: (input: { Marker?: string, MaxItems?: number, OnlyAttached?: boolean, PathPrefix?: string, PolicyUsageFilter?: string, Scope?: string, paginate?: boolean | string }) => Promise<ListPoliciesResponse>
   /**
    * @description
    * - AWS docs: {@link https://docs.aws.amazon.com/IAM/latest/APIReference/API_ListPolicyTags.html IAM: ListPolicyTags}
    * - aws-lite docs: {@link https://github.com/architect/aws-lite/blob/main/plugins/iam/readme.md#ListPolicyTags IAM: ListPolicyTags}
    */
-  ListPolicyTags: (input: { PolicyArn: string, Marker?: string, MaxItems?: number, paginate?: boolean }) => Promise<ListPolicyTagsResponse>
+  ListPolicyTags: (input: { PolicyArn: string, Marker?: string, MaxItems?: number, paginate?: boolean | string }) => Promise<ListPolicyTagsResponse>
   /**
    * @description
    * - AWS docs: {@link https://docs.aws.amazon.com/IAM/latest/APIReference/API_ListRolePolicies.html IAM: ListRolePolicies}
    * - aws-lite docs: {@link https://github.com/architect/aws-lite/blob/main/plugins/iam/readme.md#ListRolePolicies IAM: ListRolePolicies}
    */
-  ListRolePolicies: (input: { RoleName: string, Marker?: string, MaxItems?: number, paginate?: boolean }) => Promise<ListRolePoliciesResponse>
+  ListRolePolicies: (input: { RoleName: string, Marker?: string, MaxItems?: number, paginate?: boolean | string }) => Promise<ListRolePoliciesResponse>
   /**
    * @description
    * - AWS docs: {@link https://docs.aws.amazon.com/IAM/latest/APIReference/API_ListRoles.html IAM: ListRoles}
    * - aws-lite docs: {@link https://github.com/architect/aws-lite/blob/main/plugins/iam/readme.md#ListRoles IAM: ListRoles}
    */
-  ListRoles: (input: { Marker?: string, MaxItems?: number, PathPrefix?: string, paginate?: boolean }) => Promise<ListRolesResponse>
+  ListRoles: (input: { Marker?: string, MaxItems?: number, PathPrefix?: string, paginate?: boolean | string }) => Promise<ListRolesResponse>
   /**
    * @description
    * - AWS docs: {@link https://docs.aws.amazon.com/IAM/latest/APIReference/API_ListRoleTags.html IAM: ListRoleTags}
    * - aws-lite docs: {@link https://github.com/architect/aws-lite/blob/main/plugins/iam/readme.md#ListRoleTags IAM: ListRoleTags}
    */
-  ListRoleTags: (input: { RoleName: string, Marker?: string, MaxItems?: number, paginate?: boolean }) => Promise<ListRoleTagsResponse>
+  ListRoleTags: (input: { RoleName: string, Marker?: string, MaxItems?: number, paginate?: boolean | string }) => Promise<ListRoleTagsResponse>
   /**
    * @description
    * - AWS docs: {@link https://docs.aws.amazon.com/IAM/latest/APIReference/API_ListUserPolicies.html IAM: ListUserPolicies}
    * - aws-lite docs: {@link https://github.com/architect/aws-lite/blob/main/plugins/iam/readme.md#ListUserPolicies IAM: ListUserPolicies}
    */
-  ListUserPolicies: (input: { UserName: string, Marker?: string, MaxItems?: number, paginate?: boolean }) => Promise<ListUserPoliciesResponse>
+  ListUserPolicies: (input: { UserName: string, Marker?: string, MaxItems?: number, paginate?: boolean | string }) => Promise<ListUserPoliciesResponse>
   /**
    * @description
    * - AWS docs: {@link https://docs.aws.amazon.com/IAM/latest/APIReference/API_ListUsers.html IAM: ListUsers}
    * - aws-lite docs: {@link https://github.com/architect/aws-lite/blob/main/plugins/iam/readme.md#ListUsers IAM: ListUsers}
    */
-  ListUsers: (input: { Marker?: string, MaxItems?: number, PathPrefix?: string, paginate?: boolean }) => Promise<ListUsersResponse>
+  ListUsers: (input: { Marker?: string, MaxItems?: number, PathPrefix?: string, paginate?: boolean | string }) => Promise<ListUsersResponse>
   /**
    * @description
    * - AWS docs: {@link https://docs.aws.amazon.com/IAM/latest/APIReference/API_ListUserTags.html IAM: ListUserTags}
    * - aws-lite docs: {@link https://github.com/architect/aws-lite/blob/main/plugins/iam/readme.md#ListUserTags IAM: ListUserTags}
    */
-  ListUserTags: (input: { UserName: string, Marker?: string, MaxItems?: number, paginate?: boolean }) => Promise<ListUserTagsResponse>
+  ListUserTags: (input: { UserName: string, Marker?: string, MaxItems?: number, paginate?: boolean | string }) => Promise<ListUserTagsResponse>
   /**
    * @description
    * - AWS docs: {@link https://docs.aws.amazon.com/IAM/latest/APIReference/API_PutGroupPolicy.html IAM: PutGroupPolicy}
