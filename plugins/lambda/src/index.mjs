@@ -75,7 +75,7 @@ const valPaginate = { type: 'boolean', comment: 'Enable automatic result paginat
 const VersionNumber = { ...num, required, comment: 'The version number of the layer' }
 const VpcConfig = { ...obj, comment: 'VPC networking configuration', ref: docRoot + 'API_VpcConfig.html' }
 
-const defaultResponse = ({ payload }) => payload
+const defaultResponse = ({ payload }) => payload || {}
 const emptyResponse = () => ({ })
 const paginator = {
   type: 'query',

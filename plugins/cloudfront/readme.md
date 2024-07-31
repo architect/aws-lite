@@ -42,18 +42,51 @@ Properties:
   - [More details (AWS)](https://docs.aws.amazon.com/cloudfront/latest/APIReference/API_CreateDistribution.html#API_CreateDistribution_RequestSyntax)
 
 
+### `CreateFunction`
+
+[Canonical AWS API doc](https://docs.aws.amazon.com/cloudfront/latest/APIReference/API_CreateFunction.html)
+
+Properties:
+- **`FunctionCode` (string) [required]**
+  - Base64 encoded function code
+- **`FunctionConfig` (object) [required]**
+  - Function configuration
+- **`Name` (string) [required]**
+  - Function name
+
+
 ### `CreateInvalidation`
 
 [Canonical AWS API doc](https://docs.aws.amazon.com/cloudfront/latest/APIReference/API_CreateInvalidation.html)
 
 Properties:
 - **`Id` (string) [required]**
-  - Distribution ID
+  - ID of the resource
 - **`InvalidationBatch` (string, array)**
   - One or more invalidation parameters
   - [More details (AWS)](https://docs.aws.amazon.com/cloudfront/latest/APIReference/API_CreateInvalidation.html#API_CreateInvalidation_RequestSyntax)
 - **`CallerReference` (string) [required]**
   - Unique value that ensures that the request cannot be replayed
+
+
+### `CreateKeyGroup`
+
+[Canonical AWS API doc](https://docs.aws.amazon.com/cloudfront/latest/APIReference/API_CreateKeyGroup.html)
+
+Properties:
+- **`KeyGroupConfig` (object) [required]**
+  - Key group configuration
+  - [More details (AWS)](https://docs.aws.amazon.com/cloudfront/latest/APIReference/API_KeyGroupConfig.html)
+
+
+### `CreatePublicKey`
+
+[Canonical AWS API doc](https://docs.aws.amazon.com/cloudfront/latest/APIReference/API_CreatePublicKey.html)
+
+Properties:
+- **`PublicKeyConfig` (object) [required]**
+  - Public key configuration
+  - [More details (AWS)](https://docs.aws.amazon.com/cloudfront/latest/APIReference/API_CreatePublicKey.html#cloudfront-CreatePublicKey-request-PublicKeyConfig)
 
 
 ### `DeleteDistribution`
@@ -62,9 +95,53 @@ Properties:
 
 Properties:
 - **`Id` (string) [required]**
-  - Distribution ID
+  - ID of the resource
 - **`IfMatch` (string)**
   - Value of previous `GetDistribution` call's `ETag` property
+
+
+### `DeleteFunction`
+
+[Canonical AWS API doc](https://docs.aws.amazon.com/cloudfront/latest/APIReference/API_DeleteFunction.html)
+
+Properties:
+- **`Name` (string) [required]**
+  - Function name
+- **`IfMatch` (string) [required]**
+  - Value of previous `GetDistribution` call's `ETag` property
+
+
+### `DeleteKeyGroup`
+
+[Canonical AWS API doc](https://docs.aws.amazon.com/cloudfront/latest/APIReference/API_DeleteKeyGroup.html)
+
+Properties:
+- **`Name` (string) [required]**
+  - Function name
+- **`IfMatch` (string)**
+  - Value of previous `GetDistribution` call's `ETag` property
+
+
+### `DeletePublicKey`
+
+[Canonical AWS API doc](https://docs.aws.amazon.com/cloudfront/latest/APIReference/API_DeletePublicKey.html)
+
+Properties:
+- **`Id` (string) [required]**
+  - ID of the resource
+- **`IfMatch` (string)**
+  - Value of previous `GetDistribution` call's `ETag` property
+
+
+### `DescribeFunction`
+
+[Canonical AWS API doc](https://docs.aws.amazon.com/cloudfront/latest/APIReference/API_DescribeFunction.html)
+
+Properties:
+- **`Name` (string) [required]**
+  - Function name
+- **`Stage` (string)**
+  - The functions stage; can be one of: `DEVELOPMENT`, `LIVE`
 
 
 ### `GetDistribution`
@@ -73,7 +150,7 @@ Properties:
 
 Properties:
 - **`Id` (string) [required]**
-  - Distribution ID
+  - ID of the resource
 
 
 ### `GetDistributionConfig`
@@ -82,7 +159,54 @@ Properties:
 
 Properties:
 - **`Id` (string) [required]**
-  - Distribution ID
+  - ID of the resource
+
+
+### `GetFunction`
+
+[Canonical AWS API doc](https://docs.aws.amazon.com/cloudfront/latest/APIReference/API_GetFunction.html)
+
+Properties:
+- **`Name` (string) [required]**
+  - Function name
+- **`Stage` (string)**
+  - The functions stage; can be one of: `DEVELOPMENT`, `LIVE`
+
+
+### `GetKeyGroup`
+
+[Canonical AWS API doc](https://docs.aws.amazon.com/cloudfront/latest/APIReference/API_GetKeyGroup.html)
+
+Properties:
+- **`Id` (string) [required]**
+  - ID of the resource
+
+
+### `GetKeyGroupConfig`
+
+[Canonical AWS API doc](https://docs.aws.amazon.com/cloudfront/latest/APIReference/API_GetKeyGroupConfig.html)
+
+Properties:
+- **`Id` (string) [required]**
+  - ID of the resource
+
+
+### `GetPublicKey`
+
+[Canonical AWS API doc](https://docs.aws.amazon.com/cloudfront/latest/APIReference/API_GetPublicKey.html)
+
+Properties:
+- **`Id` (string) [required]**
+  - ID of the resource
+
+
+### `GetPublicKeyConfig`
+
+[Canonical AWS API doc](https://docs.aws.amazon.com/cloudfront/latest/APIReference/API_GetPublicKeyConfig.html)
+
+Properties:
+- **`Id` (string) [required]**
+  - ID of the resource
 
 
 ### `ListDistributions`
@@ -94,8 +218,64 @@ Properties:
   - Pagination cursor token to be used if `NextMarker` was returned in a previous response
 - **`MaxItems` (number)**
   - Maximum number of items to return
-- **`paginate` (boolean)**
+- **`paginate` (boolean, string)**
   - Enable automatic result pagination; use this instead of making your own individual pagination requests
+
+
+### `ListFunctions`
+
+[Canonical AWS API doc](https://docs.aws.amazon.com/cloudfront/latest/APIReference/API_ListFunctions.html)
+
+Properties:
+- **`Marker` (string)**
+  - Pagination cursor token to be used if `NextMarker` was returned in a previous response
+- **`MaxItems` (number)**
+  - Maximum number of items to return
+- **`Stage` (string)**
+  - The functions stage; can be one of: `DEVELOPMENT`, `LIVE`
+- **`paginate` (boolean, string)**
+  - Enable automatic result pagination; use this instead of making your own individual pagination requests
+
+
+### `ListKeyGroups`
+
+[Canonical AWS API doc](https://docs.aws.amazon.com/cloudfront/latest/APIReference/API_ListKeyGroups.html)
+
+Properties:
+- **`Marker` (string)**
+  - Pagination cursor token to be used if `NextMarker` was returned in a previous response
+- **`MaxItems` (number)**
+  - Maximum number of items to return
+- **`paginate` (boolean, string)**
+  - Enable automatic result pagination; use this instead of making your own individual pagination requests
+
+
+### `ListPublicKeys`
+
+[Canonical AWS API doc](https://docs.aws.amazon.com/cloudfront/latest/APIReference/API_ListPublicKeys.html)
+
+Properties:
+- **`Marker` (string)**
+  - Pagination cursor token to be used if `NextMarker` was returned in a previous response
+- **`MaxItems` (number)**
+  - Maximum number of items to return
+- **`paginate` (boolean, string)**
+  - Enable automatic result pagination; use this instead of making your own individual pagination requests
+
+
+### `TestFunction`
+
+[Canonical AWS API doc](https://docs.aws.amazon.com/cloudfront/latest/APIReference/API_TestFunction.html)
+
+Properties:
+- **`Name` (string) [required]**
+  - Function name
+- **`IfMatch` (string) [required]**
+  - Value of previous `GetDistribution` call's `ETag` property
+- **`EventObject` (string) [required]**
+  - Base64 encoded binary `Event` object that will be passed to your function as an argument
+- **`Stage` (string)**
+  - The functions stage; can be one of: `DEVELOPMENT`, `LIVE`
 
 
 ### `UpdateDistribution`
@@ -107,7 +287,50 @@ Properties:
   - Complete distribution configuration object from `GetDistribution` call
   - [More details (AWS)](https://docs.aws.amazon.com/cloudfront/latest/APIReference/API_UpdateDistribution.html#API_UpdateDistribution_RequestBody)
 - **`Id` (string) [required]**
-  - Distribution ID
+  - ID of the resource
+- **`IfMatch` (string) [required]**
+  - Value of previous `GetDistribution` call's `ETag` property
+
+
+### `UpdateFunction`
+
+[Canonical AWS API doc](https://docs.aws.amazon.com/cloudfront/latest/APIReference/API_UpdateFunction.html)
+
+Properties:
+- **`IfMatch` (string) [required]**
+  - Value of previous `GetDistribution` call's `ETag` property
+- **`Name` (string) [required]**
+  - Function name
+- **`FunctionCode` (string) [required]**
+  - Base64 encoded function code
+- **`FunctionConfig` (object) [required]**
+  - Function configuration
+
+
+### `UpdateKeyGroup`
+
+[Canonical AWS API doc](https://docs.aws.amazon.com/cloudfront/latest/APIReference/API_UpdateKeyGroup.html)
+
+Properties:
+- **`KeyGroupConfig` (object) [required]**
+  - Key group configuration
+  - [More details (AWS)](https://docs.aws.amazon.com/cloudfront/latest/APIReference/API_KeyGroupConfig.html)
+- **`Id` (string) [required]**
+  - ID of the resource
+- **`IfMatch` (string) [required]**
+  - Value of previous `GetDistribution` call's `ETag` property
+
+
+### `UpdatePublicKey`
+
+[Canonical AWS API doc](https://docs.aws.amazon.com/cloudfront/latest/APIReference/API_UpdatePublicKey.html)
+
+Properties:
+- **`PublicKeyConfig` (object) [required]**
+  - Public key configuration
+  - [More details (AWS)](https://docs.aws.amazon.com/cloudfront/latest/APIReference/API_UpdatePublicKey.html#cloudfront-UpdatePublicKey-request-PublicKeyConfig)
+- **`Id` (string) [required]**
+  - ID of the resource
 - **`IfMatch` (string) [required]**
   - Value of previous `GetDistribution` call's `ETag` property
 
@@ -124,13 +347,10 @@ Properties:
 - [`CreateDistributionWithTags`](https://docs.aws.amazon.com/cloudfront/latest/APIReference/API_CreateDistributionWithTags.html)
 - [`CreateFieldLevelEncryptionConfig`](https://docs.aws.amazon.com/cloudfront/latest/APIReference/API_CreateFieldLevelEncryptionConfig.html)
 - [`CreateFieldLevelEncryptionProfile`](https://docs.aws.amazon.com/cloudfront/latest/APIReference/API_CreateFieldLevelEncryptionProfile.html)
-- [`CreateFunction`](https://docs.aws.amazon.com/cloudfront/latest/APIReference/API_CreateFunction.html)
-- [`CreateKeyGroup`](https://docs.aws.amazon.com/cloudfront/latest/APIReference/API_CreateKeyGroup.html)
 - [`CreateKeyValueStore`](https://docs.aws.amazon.com/cloudfront/latest/APIReference/API_CreateKeyValueStore.html)
 - [`CreateMonitoringSubscription`](https://docs.aws.amazon.com/cloudfront/latest/APIReference/API_CreateMonitoringSubscription.html)
 - [`CreateOriginAccessControl`](https://docs.aws.amazon.com/cloudfront/latest/APIReference/API_CreateOriginAccessControl.html)
 - [`CreateOriginRequestPolicy`](https://docs.aws.amazon.com/cloudfront/latest/APIReference/API_CreateOriginRequestPolicy.html)
-- [`CreatePublicKey`](https://docs.aws.amazon.com/cloudfront/latest/APIReference/API_CreatePublicKey.html)
 - [`CreateRealtimeLogConfig`](https://docs.aws.amazon.com/cloudfront/latest/APIReference/API_CreateRealtimeLogConfig.html)
 - [`CreateResponseHeadersPolicy`](https://docs.aws.amazon.com/cloudfront/latest/APIReference/API_CreateResponseHeadersPolicy.html)
 - [`CreateStreamingDistribution`](https://docs.aws.amazon.com/cloudfront/latest/APIReference/API_CreateStreamingDistribution.html)
@@ -140,17 +360,13 @@ Properties:
 - [`DeleteContinuousDeploymentPolicy`](https://docs.aws.amazon.com/cloudfront/latest/APIReference/API_DeleteContinuousDeploymentPolicy.html)
 - [`DeleteFieldLevelEncryptionConfig`](https://docs.aws.amazon.com/cloudfront/latest/APIReference/API_DeleteFieldLevelEncryptionConfig.html)
 - [`DeleteFieldLevelEncryptionProfile`](https://docs.aws.amazon.com/cloudfront/latest/APIReference/API_DeleteFieldLevelEncryptionProfile.html)
-- [`DeleteFunction`](https://docs.aws.amazon.com/cloudfront/latest/APIReference/API_DeleteFunction.html)
-- [`DeleteKeyGroup`](https://docs.aws.amazon.com/cloudfront/latest/APIReference/API_DeleteKeyGroup.html)
 - [`DeleteKeyValueStore`](https://docs.aws.amazon.com/cloudfront/latest/APIReference/API_DeleteKeyValueStore.html)
 - [`DeleteMonitoringSubscription`](https://docs.aws.amazon.com/cloudfront/latest/APIReference/API_DeleteMonitoringSubscription.html)
 - [`DeleteOriginAccessControl`](https://docs.aws.amazon.com/cloudfront/latest/APIReference/API_DeleteOriginAccessControl.html)
 - [`DeleteOriginRequestPolicy`](https://docs.aws.amazon.com/cloudfront/latest/APIReference/API_DeleteOriginRequestPolicy.html)
-- [`DeletePublicKey`](https://docs.aws.amazon.com/cloudfront/latest/APIReference/API_DeletePublicKey.html)
 - [`DeleteRealtimeLogConfig`](https://docs.aws.amazon.com/cloudfront/latest/APIReference/API_DeleteRealtimeLogConfig.html)
 - [`DeleteResponseHeadersPolicy`](https://docs.aws.amazon.com/cloudfront/latest/APIReference/API_DeleteResponseHeadersPolicy.html)
 - [`DeleteStreamingDistribution`](https://docs.aws.amazon.com/cloudfront/latest/APIReference/API_DeleteStreamingDistribution.html)
-- [`DescribeFunction`](https://docs.aws.amazon.com/cloudfront/latest/APIReference/API_DescribeFunction.html)
 - [`DescribeKeyValueStore`](https://docs.aws.amazon.com/cloudfront/latest/APIReference/API_DescribeKeyValueStore.html)
 - [`GetCachePolicy`](https://docs.aws.amazon.com/cloudfront/latest/APIReference/API_GetCachePolicy.html)
 - [`GetCachePolicyConfig`](https://docs.aws.amazon.com/cloudfront/latest/APIReference/API_GetCachePolicyConfig.html)
@@ -162,17 +378,12 @@ Properties:
 - [`GetFieldLevelEncryptionConfig`](https://docs.aws.amazon.com/cloudfront/latest/APIReference/API_GetFieldLevelEncryptionConfig.html)
 - [`GetFieldLevelEncryptionProfile`](https://docs.aws.amazon.com/cloudfront/latest/APIReference/API_GetFieldLevelEncryptionProfile.html)
 - [`GetFieldLevelEncryptionProfileConfig`](https://docs.aws.amazon.com/cloudfront/latest/APIReference/API_GetFieldLevelEncryptionProfileConfig.html)
-- [`GetFunction`](https://docs.aws.amazon.com/cloudfront/latest/APIReference/API_GetFunction.html)
 - [`GetInvalidation`](https://docs.aws.amazon.com/cloudfront/latest/APIReference/API_GetInvalidation.html)
-- [`GetKeyGroup`](https://docs.aws.amazon.com/cloudfront/latest/APIReference/API_GetKeyGroup.html)
-- [`GetKeyGroupConfig`](https://docs.aws.amazon.com/cloudfront/latest/APIReference/API_GetKeyGroupConfig.html)
 - [`GetMonitoringSubscription`](https://docs.aws.amazon.com/cloudfront/latest/APIReference/API_GetMonitoringSubscription.html)
 - [`GetOriginAccessControl`](https://docs.aws.amazon.com/cloudfront/latest/APIReference/API_GetOriginAccessControl.html)
 - [`GetOriginAccessControlConfig`](https://docs.aws.amazon.com/cloudfront/latest/APIReference/API_GetOriginAccessControlConfig.html)
 - [`GetOriginRequestPolicy`](https://docs.aws.amazon.com/cloudfront/latest/APIReference/API_GetOriginRequestPolicy.html)
 - [`GetOriginRequestPolicyConfig`](https://docs.aws.amazon.com/cloudfront/latest/APIReference/API_GetOriginRequestPolicyConfig.html)
-- [`GetPublicKey`](https://docs.aws.amazon.com/cloudfront/latest/APIReference/API_GetPublicKey.html)
-- [`GetPublicKeyConfig`](https://docs.aws.amazon.com/cloudfront/latest/APIReference/API_GetPublicKeyConfig.html)
 - [`GetRealtimeLogConfig`](https://docs.aws.amazon.com/cloudfront/latest/APIReference/API_GetRealtimeLogConfig.html)
 - [`GetResponseHeadersPolicy`](https://docs.aws.amazon.com/cloudfront/latest/APIReference/API_GetResponseHeadersPolicy.html)
 - [`GetResponseHeadersPolicyConfig`](https://docs.aws.amazon.com/cloudfront/latest/APIReference/API_GetResponseHeadersPolicyConfig.html)
@@ -190,20 +401,16 @@ Properties:
 - [`ListDistributionsByWebACLId`](https://docs.aws.amazon.com/cloudfront/latest/APIReference/API_ListDistributionsByWebACLId.html)
 - [`ListFieldLevelEncryptionConfigs`](https://docs.aws.amazon.com/cloudfront/latest/APIReference/API_ListFieldLevelEncryptionConfigs.html)
 - [`ListFieldLevelEncryptionProfiles`](https://docs.aws.amazon.com/cloudfront/latest/APIReference/API_ListFieldLevelEncryptionProfiles.html)
-- [`ListFunctions`](https://docs.aws.amazon.com/cloudfront/latest/APIReference/API_ListFunctions.html)
 - [`ListInvalidations`](https://docs.aws.amazon.com/cloudfront/latest/APIReference/API_ListInvalidations.html)
-- [`ListKeyGroups`](https://docs.aws.amazon.com/cloudfront/latest/APIReference/API_ListKeyGroups.html)
 - [`ListKeyValueStores`](https://docs.aws.amazon.com/cloudfront/latest/APIReference/API_ListKeyValueStores.html)
 - [`ListOriginAccessControls`](https://docs.aws.amazon.com/cloudfront/latest/APIReference/API_ListOriginAccessControls.html)
 - [`ListOriginRequestPolicies`](https://docs.aws.amazon.com/cloudfront/latest/APIReference/API_ListOriginRequestPolicies.html)
-- [`ListPublicKeys`](https://docs.aws.amazon.com/cloudfront/latest/APIReference/API_ListPublicKeys.html)
 - [`ListRealtimeLogConfigs`](https://docs.aws.amazon.com/cloudfront/latest/APIReference/API_ListRealtimeLogConfigs.html)
 - [`ListResponseHeadersPolicies`](https://docs.aws.amazon.com/cloudfront/latest/APIReference/API_ListResponseHeadersPolicies.html)
 - [`ListStreamingDistributions`](https://docs.aws.amazon.com/cloudfront/latest/APIReference/API_ListStreamingDistributions.html)
 - [`ListTagsForResource`](https://docs.aws.amazon.com/cloudfront/latest/APIReference/API_ListTagsForResource.html)
 - [`PublishFunction`](https://docs.aws.amazon.com/cloudfront/latest/APIReference/API_PublishFunction.html)
 - [`TagResource`](https://docs.aws.amazon.com/cloudfront/latest/APIReference/API_TagResource.html)
-- [`TestFunction`](https://docs.aws.amazon.com/cloudfront/latest/APIReference/API_TestFunction.html)
 - [`UntagResource`](https://docs.aws.amazon.com/cloudfront/latest/APIReference/API_UntagResource.html)
 - [`UpdateCachePolicy`](https://docs.aws.amazon.com/cloudfront/latest/APIReference/API_UpdateCachePolicy.html)
 - [`UpdateCloudFrontOriginAccessIdentity`](https://docs.aws.amazon.com/cloudfront/latest/APIReference/API_UpdateCloudFrontOriginAccessIdentity.html)
@@ -211,12 +418,9 @@ Properties:
 - [`UpdateDistributionWithStagingConfig`](https://docs.aws.amazon.com/cloudfront/latest/APIReference/API_UpdateDistributionWithStagingConfig.html)
 - [`UpdateFieldLevelEncryptionConfig`](https://docs.aws.amazon.com/cloudfront/latest/APIReference/API_UpdateFieldLevelEncryptionConfig.html)
 - [`UpdateFieldLevelEncryptionProfile`](https://docs.aws.amazon.com/cloudfront/latest/APIReference/API_UpdateFieldLevelEncryptionProfile.html)
-- [`UpdateFunction`](https://docs.aws.amazon.com/cloudfront/latest/APIReference/API_UpdateFunction.html)
-- [`UpdateKeyGroup`](https://docs.aws.amazon.com/cloudfront/latest/APIReference/API_UpdateKeyGroup.html)
 - [`UpdateKeyValueStore`](https://docs.aws.amazon.com/cloudfront/latest/APIReference/API_UpdateKeyValueStore.html)
 - [`UpdateOriginAccessControl`](https://docs.aws.amazon.com/cloudfront/latest/APIReference/API_UpdateOriginAccessControl.html)
 - [`UpdateOriginRequestPolicy`](https://docs.aws.amazon.com/cloudfront/latest/APIReference/API_UpdateOriginRequestPolicy.html)
-- [`UpdatePublicKey`](https://docs.aws.amazon.com/cloudfront/latest/APIReference/API_UpdatePublicKey.html)
 - [`UpdateRealtimeLogConfig`](https://docs.aws.amazon.com/cloudfront/latest/APIReference/API_UpdateRealtimeLogConfig.html)
 - [`UpdateResponseHeadersPolicy`](https://docs.aws.amazon.com/cloudfront/latest/APIReference/API_UpdateResponseHeadersPolicy.html)
 - [`UpdateStreamingDistribution`](https://docs.aws.amazon.com/cloudfront/latest/APIReference/API_UpdateStreamingDistribution.html)
